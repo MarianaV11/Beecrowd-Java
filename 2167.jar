@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int amountOfRPM = input.nextInt();
+
+        Engine engine = new Engine();
+
+        for (int i = 0; i < amountOfRPM; i++) {
+            engine.addVelocity(input.nextInt());
+        }
+        System.out.println(engine.compareRPM());
+    }
+}
+
+public class Engine {
+    private List<Integer> speed;
+
+    public Engine() {
+        speed = new ArrayList<Integer>();
+    }
+
+    public List<Integer> getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(List<Integer> speed) {
+        this.speed = speed;
+    }
+
+    public void addVelocity (int velocidade) {
+        this.speed.add(velocidade);
+    }
+
+    public Integer compareRPM() throws NoSuchElementException {
+        int previousSpeed = speed.get(0);
+        int frontSpeed;
+
+        for (int i = 0; i < speed.size() - 1; i++) {
+            frontSpeed = speed.get(i + 1);
+
+            if (frontSpeed >= previousSpeed) {
+                previousSpeed = speed.get(i + 1);
+            }
+
+            if (frontSpeed < previousSpeed) {
+                return speed.indexOf(frontSpeed) + 1;
+            }
+        }
+        return 0;
+    }
+}
