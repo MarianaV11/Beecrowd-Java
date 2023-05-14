@@ -1,0 +1,52 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int amountOfPokemonsCollected = input.nextInt();
+
+        MasterPokemon master = new MasterPokemon();
+
+        for (int i = 0; i < amountOfPokemonsCollected; i++) {
+            master.addPokemonsCaught(input.next());
+        }
+
+        System.out.printf("Falta(m) %d pomekon(s).\n", master.beMaster());
+    }
+}
+
+class MasterPokemon {
+    private int totalOfPokemons;
+    private Set<String> caughtPokemons;
+
+    public MasterPokemon () {
+        totalOfPokemons = 151;
+
+        caughtPokemons = new HashSet<>();
+    }
+
+    public void addPokemonsCaught (String pokemon) {
+        caughtPokemons.add(pokemon);
+    }
+
+    public int beMaster () {
+        return totalOfPokemons - caughtPokemons.size();
+    }
+
+    public int getTotalOfPokemons() {
+        return totalOfPokemons;
+    }
+
+    public void setTotalOfPokemons(int totalOfPokemons) {
+        this.totalOfPokemons = totalOfPokemons;
+    }
+
+    public Set<String> getCaughtPokemons() {
+        return caughtPokemons;
+    }
+
+    public void setCaughtPokemons(Set<String> caughtPokemons) {
+        this.caughtPokemons = caughtPokemons;
+    }
+}
