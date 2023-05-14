@@ -1,0 +1,82 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int numberOfCompetitors = input.nextInt();
+
+        String name;
+        double difficulty;
+
+        for (int i = 0; i < numberOfCompetitors; i++) {
+            name = input.next();
+            difficulty = input.nextDouble();
+
+            Competitor competitor = new Competitor(name, difficulty);
+
+            for (int j = 0; j < 7; j++) {
+                competitor.addScores(input.nextDouble());
+            }
+
+            System.out.printf("%s %.2f\n",competitor.getNome(), competitor.totalOfScores(difficulty));
+        }
+    }
+}
+
+class Competitor {
+    private String nome;
+    private List<Double> scores;
+
+    private double difficulty;
+
+    public Competitor (String nome, double difficulty) {
+        this.difficulty = difficulty;
+        this.nome = nome;
+
+        scores = new ArrayList<>();
+    }
+
+    public void addScores (double score) {
+        scores.add(score);
+    }
+
+    public double totalOfScores (double difficulty) {
+        double total = 0.0;
+
+        double lowestScore = Collections.min(scores);
+        double higherScore = Collections.max(scores);
+
+        scores.remove(lowestScore);
+        scores.remove(higherScore);
+
+        for (double score : scores)
+            total += score;
+
+        return total * difficulty;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Double> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Double> scores) {
+        this.scores = scores;
+    }
+
+    public Double getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+}
