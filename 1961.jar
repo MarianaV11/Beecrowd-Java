@@ -1,0 +1,89 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int heightOfJump = input.nextInt();
+        int amountOfPipe = input.nextInt();
+
+        Game game = new Game(new Pipe(), new Frog(heightOfJump));
+
+        for (int i = 0; i < amountOfPipe; i++) {
+            game.getPipe().addPipeHeight(input.nextInt());
+        }
+
+        System.out.println(game.routeResult());
+    }
+}
+
+class Game {
+    private Pipe pipe;
+    private Frog frog;
+
+    public Game (Pipe pipe, Frog frog) {
+        this.pipe = pipe;
+        this.frog = frog;
+    }
+
+    public Game () {}
+
+    public String routeResult () {
+
+
+        for (int i = 0; i < pipe.getAllOfPipes().size() - 1; i++) {
+            if ((pipe.getAllOfPipes().get(i) - pipe.getAllOfPipes().get(i + 1)) < (-frog.getHeightOfJump()))
+                return "GAME OVER";
+            if ((pipe.getAllOfPipes().get(i) - pipe.getAllOfPipes().get(i + 1)) > frog.getHeightOfJump())
+                return "GAME OVER";
+        }
+        return "YOU WIN";
+    }
+
+    public Pipe getPipe () {
+        return pipe;
+    }
+
+    public void setPipe (Pipe pipe) {
+        this.pipe = pipe;
+    }
+
+    public Frog getFrog () {
+        return frog;
+    }
+
+    public void setFrog (Frog frog) {
+        this.frog = frog;
+    }
+}
+
+class Pipe extends Game {
+    private List <Integer> pipe;
+
+    public Pipe () {
+        pipe = new ArrayList<>();
+    }
+
+    public void addPipeHeight (int pipe) {
+        this.pipe.add(pipe);
+    }
+
+    public List<Integer> getAllOfPipes () {
+        return pipe;
+    }
+}
+
+class Frog extends Game {
+    private int heightOfJump;
+
+    public Frog (int height) {
+        this.heightOfJump = height;
+    }
+
+    public void setHeightOfJump (int height) {
+        this.heightOfJump = height;
+    }
+    public int getHeightOfJump () {
+        return this.heightOfJump;
+    }
+}
